@@ -1,6 +1,6 @@
 import asyncdispatch
 import ../../nimbench/nimbench
-import ../rethinkdb
+import rethinkdb
 
 bench(async, m):
   var r = newRethinkClient()

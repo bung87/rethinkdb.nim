@@ -1,5 +1,5 @@
 import unittest, json
-import ../rethinkdb
+import rethinkdb
 
 suite "math and logic tests":
   let r = R.connect().repl()

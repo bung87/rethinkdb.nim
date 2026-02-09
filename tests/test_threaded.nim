@@ -1,5 +1,5 @@
 import threadpool
-import ../rethinkdb
+import rethinkdb
 
 setMaxPoolSize(64)
 

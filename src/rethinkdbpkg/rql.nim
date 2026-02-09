@@ -26,7 +26,7 @@ when not compileOption("threads"):
             timeFormat = "native", profile = false, durability = "hard", groupFormat = "native",
             noreply = false, db = "", arrayLimit = 100_000, binaryFormat = "native",
             minBatchRows = 8, maxBatchRows = 0, maxBatchBytes = 0, maxBatchSeconds = 0.5,
-            firstBatchScaleDownFactor = 4, callback: proc(data: JsonNode) = nil): Future[JsonNode] {.async.} =
+            firstBatchScaleDownFactor = 4, callback: proc(data: JsonNode) {.gcsafe.} = nil): Future[JsonNode] {.async.} =
     ## Run a query on a connection, returning a `JsonNode` contains single JSON result or an JsonArray, depending on the query.
     var c = c
     if c.isNil:
@@ -118,7 +118,7 @@ else:
             timeFormat = "native", profile = false, durability = "hard", groupFormat = "native",
             noreply = false, db = "", arrayLimit = 100_000, binaryFormat = "native",
             minBatchRows = 8, maxBatchRows = 0, maxBatchBytes = 0, maxBatchSeconds = 0.5,
-            firstBatchScAleDownFactor = 4, callback: proc(data: JsonNode) = nil): JsonNode {.thread, discardable.} =
+            firstBatchScAleDownFactor = 4, callback: proc(data: JsonNode) {.gcsafe.} = nil): JsonNode {.thread, discardable.} =
     ## Run a query on a connection, returning a `JsonNode` contains single JSON result or an JsonArray, depending on the query.
     var c = c
     if c.isNil:

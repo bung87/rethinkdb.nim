@@ -148,7 +148,7 @@ proc toDatum*(node: JsonNode): MutableDatum {.inline.} =
     for item in items(node.elems):
       result.arr.add(toDatum(item))
 
-proc `&`*(t: any): MutableDatum {.compileTime.} = toDatum(t)
+proc `&`*(t: auto): MutableDatum {.compileTime.} = toDatum(t)
 
 proc toDatum(x: NimNode): NimNode {.compiletime.} =
   ## Borrowed from JSON module

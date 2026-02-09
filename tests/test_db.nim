@@ -1,5 +1,5 @@
 import unittest, json, random
-import ../rethinkdb
+import rethinkdb
 
 randomize()
 

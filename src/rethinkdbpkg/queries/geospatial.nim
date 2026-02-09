@@ -1,5 +1,3 @@
-import json
-
 proc circle*(r: RethinkClient, loc: auto, radius: int, numVertices = 32, geoSystem = "", unit = "", fill = true): RqlQuery =
   NEW_QUERY(CIRCLE, loc, radius)
 

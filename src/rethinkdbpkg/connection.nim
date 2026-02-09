@@ -1,10 +1,13 @@
-import asyncnet, strutils, logging, json, struct
+import strutils, json, struct
 import scram/client
 
 when not compileOption("threads"):
-  import asyncdispatch
+  import asyncnet, asyncdispatch
 else:
   import net
+
+when defined(debug):
+  import logging
 
 import ql2, types, utils, datum
 
@@ -36,11 +39,11 @@ else:
       queryToken: uint64
 
 type
-  RqlAuthError* = object of Exception
-  RqlDriverError* = object of Exception
-  RqlClientError* = object of Exception
-  RqlCompileError* = object of Exception
-  RqlRuntimeError* = object of Exception
+  RqlAuthError* = object of CatchableError
+  RqlDriverError* = object of CatchableError
+  RqlClientError* = object of CatchableError
+  RqlCompileError* = object of CatchableError
+  RqlRuntimeError* = object of CatchableError
 
   Response* = ref object of RootObj
     kind*: ResponseType
@@ -82,7 +85,8 @@ proc `$`*(r: Response): string =
 proc newResponse(s: string, t: uint64 = 0): Response =
   result = new(Response)
   let json = parseJson(s)
-  result.kind = (ResponseType)json["t"].num
+  let responseTypeInt = json["t"].getInt
+  result.kind = cast[ResponseType](responseTypeInt)
   result.token = t
   result.data = json["r"]
   if json.hasKey("b"):
